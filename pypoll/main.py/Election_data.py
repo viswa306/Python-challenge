@@ -57,7 +57,7 @@ with open(output_path, "w",  newline = "" , encoding='utf-8') as datafile:
     writer.writerow(['----------------------------------'])
     writer.writerow([f'Total votes:{total_vote_cnt}'])
     writer.writerow(['-----------------------------------'])
-    # loop to get the election results
+    # loop to get the election data results
     for z in range(len(Candidate_unique_list)):
         writer.writerow([f'{Candidate_unique_list[z]}  : {round(Candidate_Vote_cnt[z] / total_vote_cnt * 100 ,2)}% ({Candidate_Vote_cnt[z]})'])
         y = y + 1
