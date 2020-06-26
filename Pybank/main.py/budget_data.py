@@ -17,6 +17,8 @@ finaltotal = 0
 sum =0
 cnt_months = 0
 Greatest_in_profit = []
+greatest_increase = 0
+greatest_decrease = 0
 
 with open(csvpath) as csvfile:
 
@@ -25,55 +27,55 @@ with open(csvpath) as csvfile:
     hdr = next(csvfile)
     
     print(hdr)
-    
+    # TO find the  difference and 
     for row in csvreader:
-       
-      #print(row)
+      
       cnt_months  = cnt_months + 1
       sum  = sum + int(row[1])
       diff = int(row[1]) - int(lastmonth)
       Greatest_in_profit.append(diff)
-      #print(lastmonth)
+      if diff > greatest_increase:
+        greatest_increase = diff
+        greatest_increase_month = row[0]
+      if diff < greatest_decrease:
+        greatest_decrease = diff
+        greatest_decrease_month = row[0]
+        
+      
       if ( lastmonth != 0 ):
         counter = counter + 1
         finaltotal = finaltotal + diff
-      
-       # print(counter)
-
-     
-        #unique_months.add(row[0]) 
-        #cnt_months  = cnt_months + 1
-        
-        #sum  = sum + int(row[1])
-       
-        #print(row)
+             
       lastmonth = row[1]
-#total_unique_months = len(unique_months)
 finalavg = round(finaltotal/counter ,2)
-print(f' Final Average : {finalavg}')
+print(f' Final Average : ${finalavg}')
 print(f'Total months : {cnt_months}')
-       
-#print(f' Total Months: {total_unique_months}')
-#print(total_unique_months)
-print(f'Total profit/Losses: {sum}')
-print(f'Greatest increase in profits: {(max(Greatest_in_profit))}')
-print(f'Greatest decrease in profits: {(min(Greatest_in_profit))}')
-output_path = os.path.join("..", "Analysis", "BudgetAnalysis.csv")
+     
+print(f'Total profit/Losses: ${sum}')
+print(f'Greatest increase in profits:{(greatest_increase_month)} ${(greatest_increase)} ')
+
+print(f'Greatest decrease in profits:  {(greatest_decrease_month)} ${(greatest_decrease)}')
+
+
+output_path = os.path.join("..", "Analysis", "Budget_Results.txt")
 
 # Open the file using "write" mode. Specify the variable to hold the contents
-with open(output_path, 'w') as csvfile:
+with open(output_path, 'w',newline="") as csvfile:
 
     # Initialize csv.writer
     csvwriter = csv.writer(csvfile, delimiter=',')
 
     # Write the first row (column headers)
+
     csvwriter.writerow(['Financial analysis'])
 
     # Write the second row
+    
     csvwriter.writerow(['---------------------------------------'])
-    csvwriter.writerow([' Final Average : -2315.12'])
-    csvwriter.writerow (['Total Months: 85'])
-    csvwriter.writerow (['Total profit/Losses: 38382578'])
-    csvwriter.writerow (['Greatest increase in profits: 1926159'])
-    csvwriter.writerow  (['Greatest decrease in profits: -2196167'])
+    csvwriter.writerow ([f'Total months : {cnt_months}'])
+    csvwriter.writerow([f'Final Average : ${finalavg}'])
+    csvwriter.writerow ([f'Total profit/Losses: ${sum}'])
+    csvwriter.writerow  ([f'Greatest increase in profits: {(greatest_increase_month)} ({(greatest_increase)})'])
+    csvwriter.writerow ([f'Greatest decrease in profits: {(greatest_decrease_month)} ({(greatest_decrease)})'])
+    
   
